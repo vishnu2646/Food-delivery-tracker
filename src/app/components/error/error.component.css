@@ -1,0 +1,17 @@
+:host ::ng-deep p-dialog .p-dialog-content {
+    text-align: center;
+}
+
+:host ::ng-deep p-dialog .actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    width: 100%;
+}
+
+:host ::ng-deep p-dialog .actions button {
+    width: 100%;
+    background-color: var(--primary);
+    color: #ffffff;
+}

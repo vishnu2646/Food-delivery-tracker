@@ -1,0 +1,7 @@
+<p-dialog header="Warning" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
+    <span class="p-text-secondary text-center  message block mb-5" [innerHTML]="message"></span>
+    
+    <div class="actions">
+        <p-button class="btn" (onClick)="toggleDialog()" >Ok</p-button>
+    </div>
+</p-dialog>

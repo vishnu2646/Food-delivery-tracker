@@ -1,0 +1,13 @@
+<div class="sidenav-wrapper">
+    <div>
+        <ul>
+            <li class="title">Main Menu</li>
+            <li *ngFor="let link of navLinks" [routerLink]="link.link" (click)="onLinkClick(link)" routerLinkActive="activate">
+                <i class="fa-solid" [ngClass]="link.icon"></i> {{link.title}}
+            </li>
+            <li style=" position: absolute; bottom: 7rem;" (click)="handleSignOut()">
+                <i class="fa-solid fa-sign-out"></i> Logout
+            </li>
+        </ul>
+    </div>
+</div>

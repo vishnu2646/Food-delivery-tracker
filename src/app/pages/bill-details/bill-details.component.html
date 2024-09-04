@@ -1,0 +1,158 @@
+
+<section class="details-section">
+    <h3 class="text-center">Bill Details</h3>
+    <div class="card" *ngIf="bill">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3 w-100">
+                <div><strong>InvNo</strong></div>
+                <div>{{ bill.InvNo }}</div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-3 w-100">
+                <div><strong>InvDate</strong></div>
+                <div>{{ bill.InvDate | date: 'short' }}</div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-3 w-100">
+                <div><strong></strong></div>
+                <div>{{ bill.DelAddress }}</div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-3 w-100">
+                <div><strong>Area</strong></div>
+                <div>{{ bill.Area }}</div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-3 w-100">
+                <div><strong>Mobile</strong></div>
+                <div>{{ bill.Vcode }}</div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-3"  >
+                <div><strong>No_of_Items</strong></div>
+                <div>{{ bill.NoOfItems }}</div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-3 w-100">
+                <div><strong>Item_Description</strong></div>
+                <div>{{ bill.ItemDesc }}</div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-3 w-100">
+                <div><strong>Bill &#8377;</strong></div>
+                <div>{{ bill.NetTotal }}</div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-3 w-100">
+                <div><strong>Balance</strong></div>
+                <div>{{ bill.Balance }}</div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-3 w-100">
+                <div><strong>Balance_Upto</strong></div>
+                <div>{{ bill.BalanceUpto }}</div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-3 w-100">
+                <div><strong>Gpsloc</strong></div>
+                <div>{{ bill.GPSloc }}</div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-3 w-100">
+                <div><strong>Delivery_Person_Name</strong></div>
+                <div>{{ bill['DeliveryPerson'] }}</div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-3 w-100">
+                <div><strong>Delivery_Remark</strong></div>
+                <ng-container *ngIf="!isEditMode.DeliveryTimeRemark; else remarkTemplate">
+                    <div (click)="toggleEditMode('DeliveryTimeRemark')">
+                        {{ updateBill.DeliveryTimeRemark || 'Enter remark' }}
+                    </div>
+                </ng-container>
+                <ng-template #remarkTemplate>
+                    <input 
+                        type="text" 
+                        name="remark" 
+                        id="remark" 
+                        class="form-control" 
+                        autocomplete="off" 
+                        placeholder="Enter remarks" 
+                        [(ngModel)]="updateBill.DeliveryTimeRemark" 
+                        (blur)="toggleEditMode('DeliveryTimeRemark')"
+                    >
+                </ng-template>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-3 w-100">
+                <div><strong>Delivery Status</strong></div>
+                <ng-container *ngIf="!isEditMode.selected_status; else statusTemplate">
+                    <div (click)="toggleEditMode('selected_status')">
+                        {{ updateBill.DeliveryStatus === 1 ? 'Delivered' : updateBill.DeliveryStatus === 2 ? 'Hold' : 'Not Delivered' }}
+                    </div>
+                </ng-container>
+                <ng-template #statusTemplate>
+                    <select 
+                        name="options" 
+                        id="options" 
+                        class="form-control" 
+                        [(ngModel)]="bill['DeliveryStatus']" 
+                        (change)="editStatus($event)"
+                        (blur)="toggleEditMode('selected_status')"
+                    >
+                        <option value="0">Not deliveried</option>
+                        <option value="1">Deliveried</option>
+                        <option value="2">Hold</option>
+                    </select>
+                </ng-template>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-3 w-100">
+                <div><strong>Mode</strong></div>
+                <ng-container *ngIf="!isEditMode.selected_payment_mode; else modeTemplate">
+                    <div (click)="toggleEditMode('selected_payment_mode')">
+                        {{ updateBill.Paymode }}
+                    </div>
+                </ng-container>
+                <ng-template #modeTemplate>
+                    <select name="mode" id="mode" class="form-control" [(ngModel)]="bill.Paymode" (change)="editPaymentMode($event)">
+                        <option value="Cash">Cash</option>
+                        <option value="Not Paid">Not Paid</option>
+                    </select>
+                </ng-template>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-3 w-100">
+                <div><strong>Paid &#8377;</strong></div>
+                <ng-container *ngIf="!isEditMode.PaidAmount; else amountTemplate">
+                    <div (click)="toggleEditMode('PaidAmount')">
+                        {{ updateBill.PaidAmount }}
+                    </div>
+                </ng-container>
+                <ng-template #amountTemplate>
+                    <input 
+                        type="number" 
+                        name="PaidAmount" 
+                        id="PaidAmount" 
+                        class="form-control" 
+                        [(ngModel)]="updateBill.PaidAmount"
+                        (blur)="toggleEditMode('PaidAmount')"
+                    >
+                </ng-template>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-3 w-100">
+                <div><strong>Tax No</strong></div>
+                <ng-container *ngIf="!isEditMode.TransactionNo; else transactionTemplate">
+                    <div (click)="toggleEditMode('TransactionNo')">
+                        {{ updateBill.TransactionNo || 'Enter Transaction No' }}
+                    </div>
+                </ng-container>
+                <ng-template #transactionTemplate>
+                    <input 
+                        type="text" 
+                        name="taxno" 
+                        id="taxno" 
+                        class="form-control"
+                        autocomplete="off" 
+                        placeholder="Enter Transaction No" 
+                        [(ngModel)]="updateBill.TransactionNo"
+                        (blur)="toggleEditMode('TransactionNo')"
+                    >
+                </ng-template>
+            </div>
+        </div>
+    </div>
+    
+    <div class="payment w-100 mb-2">
+        <button class="btn btn-primary mt-4 w-100" (click)="makePayment()">Make Payment</button>
+    </div>
+</section>
+
+<section *ngIf="showErrorDialog">
+    <app-error [visible]="showErrorDialog" [message]="emptyMessage"></app-error>
+</section>
