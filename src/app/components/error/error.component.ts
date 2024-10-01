@@ -24,8 +24,13 @@ export class ErrorComponent {
     public message: String = '';
 
     public toggleDialog() {
-        console.log("work");
         this.visible = false;
-        this.router.navigate(['/auth/login']);
+        if (this.router.url.includes('/dashboard/delivery/')) {
+            this.router.navigate(['/auth/delivery-login']);
+        } else if (this.router.url.includes('/dashboard/admin/')) {
+            this.router.navigate(['/auth/admin-login']);
+        } else {
+            this.router.navigate(['/auth/login']);
+        }
     }
 }

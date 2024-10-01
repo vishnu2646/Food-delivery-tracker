@@ -1,0 +1,21 @@
+:host ::ng-deep ul.p-dropdown-items {
+    padding: 0;
+}
+
+:host ::ng-deep p-dropdown .p-dropdown.p-component.p-inputwrapper {
+    width: 100%;
+}
+
+input.p-inputtext {
+    width: 100%;
+}
+
+.dateType {
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.dateType.selected {
+    color: var(--primary);
+    font-weight: bold;
+}

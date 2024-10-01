@@ -1,0 +1,52 @@
+<section>
+    <div class="header d-flex justify-content-between align-items-center flex-wrap">
+        <div class="search">
+            <input type="text" name="order-search" id="order-search" class="form-control" placeholder="Seach your Orders...">
+        </div>
+        <div class="order-sorting">
+            <div class="dropdown">
+                <button class="btn btn-outline-primary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{ selecedOption }}
+                </button>
+                <ul class="dropdown-menu">
+                    <li><span class="dropdown-item" (click)="selecedOption = 'Recently'">Recently</span></li>
+                    <li><span class="dropdown-item" (click)="selecedOption = 'Oldest'">Oldest</span></li>
+                    <li><span class="dropdown-item" (click)="selecedOption = 'Newest'">Newest</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <main class="orders-list mt-4">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        @for (column of columns; track $index) {
+                            <th>{{column}}</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (order of ordersList; track $index) {
+                        <tr>
+                            <td>
+                                <img [src]="order.menu.img" alt="order-image">
+                                <div>
+                                    <p>{{ order.menu.name }}</p>
+                                    <p>X {{ order.menu.quantity }}</p>
+                                </div>
+                            </td>
+                            <td><p>{{ order.date }}</p></td>
+                            <td><p>{{ order.address }}</p></td>
+                            <td><p>{{ order.price }}</p></td>
+                            <td>
+                                <p>{{ order.status }}</p>
+                                <button class="btn btn-outline-primary">Order Again</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </main>
+</section>

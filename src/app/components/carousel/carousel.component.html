@@ -1,0 +1,16 @@
+<section class="hero-carosel">
+    <div class="indicators">
+        <ul>
+            @for (item of heroCarosel; track $index) {
+                <li [class]="'hero-' + item.id + (item.isActive ? ' active' : '')" (click)="setActiveHeroItem($index)"></li>
+            }
+        </ul>
+    </div>
+    <div class="carosel-content">
+        @for (item of heroCarosel; track $index) {
+            <div class="carousel-item" [class]="{'active': item.isActive}">
+                <img src="{{item.img}}" alt="carosel">
+            </div>
+        }
+    </div>
+</section>

@@ -48,7 +48,7 @@ li i {
     margin-right: 10px;
 }
 
-li.activate {
+li.active {
     color: var(--primary);
 }
 

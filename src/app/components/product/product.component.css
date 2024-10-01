@@ -1,0 +1,19 @@
+
+.card {
+    width: 230px;
+}
+
+.card .card-body img {
+    width: 10rem;
+    height: 10rem;
+}
+
+.card .card-body h3 {
+    color: var(--primary);
+}
+
+@media (max-width: 767px) {
+    .menu-list-wrapper .card {
+        width: 100%;
+    }
+}

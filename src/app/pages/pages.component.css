@@ -90,8 +90,9 @@
 
 }
 
-.search-area2 .input-group-text a svg path {
-    fill: #fff;
+.search-area2 .input-group-text a i {
+    color: #fff;
+    font-size: 16px;
 }
 
 .dropdown-item.active {
@@ -134,7 +135,7 @@
 }
 
 .sidenav.mobileSideNav {
-    width: 230px;
+    width: 240px;
 }
 
 .backIcon {
@@ -152,6 +153,29 @@
 .content-wrapper .content {
     width: 100%;
     margin-top: 2rem;
+}
+
+.content-wrapper .content::before {
+    content: '';
+    width: 2.5rem;
+    height: 2.188rem;
+    background: var(--primary);
+    position: fixed;
+    top: 77px;
+    left: 0;
+    z-index: -8;
+}
+
+.content-wrapper .content::after {
+    content: '';
+    width: 2.5rem;
+    height: 2.188rem;
+    background-color: white;
+    left: 0;
+    top: 77px;
+    position: fixed;
+    border-radius: 40px 0 0 0;
+    z-index: -7;
 }
 
 .content-wrapper .content .container {
@@ -179,6 +203,10 @@
 
     .content-wrapper{
         margin-top: 65px;
+    }
+
+    .content-wrapper .content::after, .content-wrapper .content::before {
+        display: none;
     }
 
     .header-section {

@@ -38,7 +38,7 @@ export class UserdetailsService {
 
     public getLoginData(): ICheckLogin {
         const data = sessionStorage.getItem('details');
-
+        console.log(data);
         if(data) {
             this.LoginData = JSON.parse(data);
         }

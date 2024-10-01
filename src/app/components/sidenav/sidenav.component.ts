@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, HostListener, inject, Input, Output } from '@angular/core';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { map, Observable, switchMap } from 'rxjs';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
     selector: 'app-sidenav',
@@ -30,6 +29,12 @@ export class SidenavComponent {
 
     public handleSignOut() {
         sessionStorage.removeItem('otp');
-        this.router.navigate(['/auth/login']);
+        if (this.router.url.includes('/dashboard/delivery/')) {
+            this.router.navigate(['/auth/delivery-login']);
+        } else if (this.router.url.includes('/dashboard/admin/')) {
+            this.router.navigate(['/auth/admin-login']);
+        } else {
+            this.router.navigate(['/auth/login']);
+        }
     }
 }

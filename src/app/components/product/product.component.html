@@ -1,0 +1,24 @@
+<div class="card" [ngClass]="swiperClass">
+    <div class="card-body">
+        <div class="d-flex align-items-center justify-content-center">
+            <img src="{{ item.img }}" alt="img">
+        </div>
+        <p>{{ item.category }}</p>
+        <hr />
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <h5>{{ item.name }}</h5>
+                <h3>&#8377; {{ item.price }}</h3>
+            </div>
+            @if(item.isSelected) {
+                <button class="btn btn-primary" (click)="item.isSelected = false">
+                    <i class="fa-solid fa-check"></i>
+                </button>
+            } @else {
+                <button class="btn btn-primary" (click)="item.isSelected = true">
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+            }
+        </div>
+    </div>
+</div>

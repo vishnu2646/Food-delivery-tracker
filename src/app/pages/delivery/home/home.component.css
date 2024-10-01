@@ -1,0 +1,46 @@
+/* .content-header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.card {
+    width: 220px;
+    cursor: pointer;
+}
+
+.card:hover {
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
+    border: 0;
+    transition: 0.5s;
+}
+
+.card .card-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.card .card-body .count {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+}
+
+.card .card-body .count div:nth-child(2) {
+    background: var(--primary);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: var(--sidenav-bg);
+    font-size: 1rem;
+}
+
+@media (max-width: 768px){
+    .card {
+        width: 100%;
+    }
+} */

@@ -1,0 +1,160 @@
+<section class="cart-section">
+    <div class="shopping-cart">
+        <div class="title">
+            Your Orders List
+        </div>
+       
+        <div class="item">
+            <div class="buttons">
+                <span class="delete-btn">
+                    <i class="fa-solid fa-trash text-danger"></i>
+                </span>
+            </div>
+        
+            <div class="image">
+                <img src="https://fooddesk.dexignlab.com/xhtml/images/popular-img/pic-3.jpg" alt="" />
+            </div>
+        
+            <div class="description">
+                <span>Common Projects</span>
+                <span>Bball High</span>
+                <span>White</span>
+            </div>
+        
+            <div class="quantity">
+                <button 
+                    class="minus-btn" 
+                    type="button" 
+                    name="button" 
+                    [disabled]="quantity==1"
+                    [ngStyle]="{'cursor': quantity===1 ? 'no-drop' : 'pointer'}"
+                    (click)="handleDecreaseQuantity()"
+                >
+                <i class="fa-solid fa-minus"></i>
+            </button>
+            <span>{{ quantity }}</span>
+            <button class="plus-btn" type="button" name="button"
+                (click)="handleIncreaseQuantity()"
+            >
+                <i class="fa-solid fa-plus"></i>
+            </button>
+            </div>
+        
+            <div class="total-price">$549</div>
+        </div>
+       
+        <div class="item">
+            <div class="buttons">
+                <span class="delete-btn">
+                    <i class="fa-solid fa-trash text-danger"></i>
+                </span>
+            </div>
+        
+            <div class="image">
+                <img src="https://fooddesk.dexignlab.com/xhtml/images/popular-img/pic-1.jpg" alt="" />
+            </div>
+        
+            <div class="description">
+                <span>Maison Margiela</span>
+                <span>Future Sneakers</span>
+                <span>White</span>
+            </div>
+        
+            <div class="quantity">
+                <button 
+                    class="minus-btn" 
+                    type="button" 
+                    name="button" 
+                    [disabled]="quantity==1"
+                    [ngStyle]="{'cursor': quantity===1 ? 'no-drop' : 'pointer'}"
+                    (click)="handleDecreaseQuantity()"
+                >
+                    <i class="fa-solid fa-minus"></i>
+                </button>
+                <span>{{ quantity }}</span>
+                <button 
+                    class="plus-btn" 
+                    type="button" 
+                    name="button"
+                    (click)="handleIncreaseQuantity()"
+                >
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+            </div>
+        
+            <div class="total-price">$870</div>
+        </div>
+       
+        <div class="item">
+            <div class="buttons">
+                <span class="delete-btn">
+                    <i class="fa-solid fa-trash text-danger"></i>
+                </span>
+            </div>
+        
+            <div class="image">
+                <img src="https://fooddesk.dexignlab.com/xhtml/images/popular-img/pic-2.jpg" alt="" />
+            </div>
+        
+            <div class="description">
+                <span>Our Legacy</span>
+                <span>Brushed Scarf</span>
+                <span>Brown</span>
+            </div>
+        
+            <div class="quantity">
+                <button 
+                    class="minus-btn" 
+                    type="button" 
+                    name="button" 
+                    [disabled]="quantity==1"
+                    [ngStyle]="{'cursor': quantity===1 ? 'no-drop' : 'pointer'}"
+                    (click)="handleDecreaseQuantity()"
+                >
+                    <i class="fa-solid fa-minus"></i>
+                </button>
+                <span>{{ quantity }}</span>
+                <button 
+                    class="plus-btn" 
+                    type="button" 
+                    name="button"
+                    (click)="handleIncreaseQuantity()"
+                >
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+                
+            </div>
+        
+            <div class="total-price">$349</div>
+        </div>
+    </div>
+    
+    <div class="repeat-order">
+        <div>
+            <input 
+                type="checkbox" 
+                class="form-check-input me-2" 
+                name="repeat" 
+                id="repeat"
+                (change)="repeatOrder = !repeatOrder" 
+            >
+            <span>Do you want repeat your Order ? </span>
+        </div>
+        @if (repeatOrder) {
+            <div class="form-group mt-2">
+                <label for="order-repeat">Repeat Your Order</label>
+                <input 
+                    type="text" 
+                    class="form-control" 
+                    autocomplete="off" 
+                    placeholder="Repeat Order" 
+                    name="order-repeat" 
+                    id="order-repeat"
+                >
+            </div>
+            <button class="btn btn-outline-primary mt-2 w-100">Save Repeat Order</button>
+        }
+        <button class="btn btn-outline-primary mt-2 w-100">Complete your order</button>
+
+    </div>
+</section>

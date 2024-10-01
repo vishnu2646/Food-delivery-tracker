@@ -1,0 +1,23 @@
+.admin-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.admin-section .card {
+    width: 220px;
+    cursor: pointer;
+}
+
+.admin-section .card:hover {
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
+    border: 0;
+    transition: 0.5s;
+}
+
+@media (max-width: 768px){
+    .admin-section  .card {
+        width: 100%;
+    }
+}

@@ -1,0 +1,105 @@
+<div class="d-flex align-items-center justify-content-between flex-wrap">
+    <h4>{{ formType }} Form</h4>
+    <button class="btn float-end btn-outline-primary" (click)="handleSubmit()">Finish order</button>
+</div>
+<br/>
+<div class="d-flex align-items-center flex-wrap gap-3 md:gap-5">
+    <table>
+        <tr>
+            <td>
+                <label for="itemtype" class="font-semibold w-[6rem] me-3">Item Type</label>
+            </td>
+            <td>
+                <p-dropdown 
+                    [options]="types" 
+                    [(ngModel)]="seletedItemType"
+                    optionLabel="Item_type" 
+                    placeholder="Select a Type"
+                    (onChange)="handleItemTypeChange($event)"
+                />
+            </td>
+        </tr>
+        <br />
+        <tr>
+            <td>
+                <label for="itemtype" class="font-semibold w-[6rem] me-3">Item</label>
+            </td>
+            <td>
+                <p-autoComplete 
+                    [suggestions]="filteredItems"
+                    optionLabel="Item_desc1"
+                    (completeMethod)="handleFilterItem($event)"
+                    (onSelect)="handleSelectItem($event)"
+                    [(ngModel)]="itemForm.item"
+                    placeholder="Enter Item"
+                />
+            </td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td>
+                <label for="qty" class="font-semibold w-[6rem] me-3">Qty</label>
+            </td>
+            <td>
+                <p-inputNumber 
+                    inputId="minmaxfraction" 
+                    mode="decimal" 
+                    [maxFractionDigits]="2"
+                    placeholder="Enter Quantity"
+                    [(ngModel)]="itemForm.qty"
+                /> 
+            </td>
+        </tr>
+        <br />
+        <tr>
+            <td>
+                <label for="entredby" class="font-semibold w-[6rem] me-3">Enter Remarks</label>
+            </td>
+            <td>
+                <input type="text" pInputText placeholder="Entter Remarks" [(ngModel)]="itemForm.remarks" />
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="d-flex align-items-center flex-wrap mt-3">
+    <div class="d-flex align-items-center flex-wrap gap-3">
+        <label for="date" class="font-semibold dateType w-[6rem] me-3">Order Date</label>
+        @for (dateType of dateTypes; track $index) {
+            <span class="dateType" [ngClass]="{'selected': dateType === selectedDateType}" (click)="seletedOrderDate(dateType)">{{ dateType }}</span>
+        }
+    </div>
+    @if(enableDateRange) {
+        <div class="w-100 mt-3 d-flex flex-column gap-3">
+            <input type="date" name="fromorderdate" id="fromorderdate" class="form-control w-100" (change)="handleDateChange($event, 'from')">
+            <input type="date" name="toorderdate" id="toorderdate" class="form-control w-100" (change)="handleDateChange($event, 'to')">
+        </div>
+    }
+
+    <button class="btn btn-primary mt-3" (click)="handleAddItem()">Add Item</button>
+</div>
+<div class="mb-3 mt-5">
+    <p-table 
+        responsiveLayout="stack" 
+        [breakpoint]="'960px'"
+        [value]="items"
+        styleClass="mt-5"
+    >
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th>Name </th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Rate</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+            <tr>
+                <td>{{ item.item_desc }}</td>
+                <td>{{ item.Qty }}</td>
+                <td>{{ seletedItem.StandardCost }}</td>
+                <td>{{ (seletedItem.StandardCost) * (item.Qty) }}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

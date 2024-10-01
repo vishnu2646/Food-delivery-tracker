@@ -1,0 +1,10 @@
+<section class="filter d-flex flex-wrap align-items-center justify-content-between w-100">
+    <input class="form-control d-flex align-items-center" type="text" placeholder="Search..." autocomplete="off" />
+    <button class="btn btn-outline-primary" (click)="handlePlaceOrder()">Place order</button>
+</section>
+
+<section class="menu-list-wrapper">
+    @for (item of menuList; track $index) {
+        <app-product [item]="item"></app-product>
+    }
+</section>

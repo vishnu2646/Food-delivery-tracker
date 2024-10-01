@@ -1,0 +1,50 @@
+.filter {
+    margin-bottom: 30px;
+    padding-left: 4.25rem;
+    padding-right: 4.25rem;
+}
+
+.filter input {
+    width: 60%;
+}
+
+.menu-list-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+
+.menu-list-wrapper .card {
+    width: 250px;
+}
+
+.menu-list-wrapper .card .card-body img {
+    width: 10rem;
+    height: 10rem;
+}
+
+.menu-list-wrapper .card .card-body h3 {
+    color: var(--primary);
+}
+
+@media (max-width: 767px) {
+    .menu-list-wrapper .card {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .filter {
+        display: flex;
+        gap: 10px;
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .filter input {
+        width: 100%;
+    }
+}

@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ICheckLogin } from '../../types';
+import { ICheckLogin, ICustomerList } from '../../types';
 import { environment } from '../../../environments/environment';
+import moment from 'moment';
 
 @Injectable({
     providedIn: 'root'
@@ -18,6 +19,11 @@ export class ApiService {
         return this.http.get<ICheckLogin>(`${this.baseUrl}/CheckLogin?OTP=${otp}&databaseKey=${this.key}`)
     }
 
+    public handleAdminLogin(otp: String, username: String): Observable<any> {
+        return this.http.get<ICheckLogin>(`${this.baseUrl}/AdminLogin?OTP=${otp}&username=${username}&databaseKey=${this.key}`)
+    }
+
+    // Delivery Apis endpoints.
     public getSummary(otp: String, dhId: number): Observable<any> {
         return this.http.get<any>(`${this.baseUrl}/getDeliverySummary?OTP=${otp}&dhid=${dhId}&databaseKey=${this.key}`)
     }
@@ -40,5 +46,35 @@ export class ApiService {
 
     public updateBill(data: any) {
         return this.http.post(`${this.baseUrl}/BillUpdate?databaseKey=${this.key}`, data)
+    }
+
+    // Admin Endpoints.
+    public getCustomersList(username: String): Observable<any> {
+        return this.http.get(`${this.baseUrl}/CustomerList?User=${username}&databaseKey=${this.key}`);
+    }
+
+    public getCustomerOrders(username: String, id: number, type: String): Observable<any> {
+        return this.http.get(`${this.baseUrl}/OrderDetails?User=${username}&Vid=${id}&Itemtype=${type}&databaseKey=${this.key}`);
+    }
+
+    public getCreateOrder(vid: String, type: String, username: String): Observable<any> {
+        const date = moment(new Date()).format('YYYY-MM-DD');
+        return this.http.get(`${this.baseUrl}/CreateOrder?Vid=${vid}&StartDate=${date}&itemtype=${type}&User=${username}&databaseKey=${this.key}`)
+    }
+
+    public createSaveOrder(data: any): Observable<any> {
+        return this.http.post(`${this.baseUrl}/SaveOrder?databaseKey=${this.key}`, data);
+    }
+
+    public cancelOrder(data: any): Observable<any> {
+        return this.http.get(`${this.baseUrl}//Addtocancel?FromDate=${data.fromDate}&ToDate=${data.toDate}&ItemType=${data.type}&Reason=${data.reason}&Vid=${data.vid}&OrId=${data.orid}&databaseKey=${this.key}`)
+    }
+
+    public getOrdersList(type: String, username: String, date?: String, vid?: String): Observable<any> {
+        if(vid !== '') {
+            return this.http.get(`${this.baseUrl}/OrderList?Vid=${vid}&User=${username}&databaseKey=${this.key}`);
+        } else {
+            return this.http.get(`${this.baseUrl}/AllOrderDetails?User=${username}&orddate=${date}&Itemtype=${type}&databaseKey=${this.key}`);
+        }
     }
 }

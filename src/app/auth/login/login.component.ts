@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
 import { lastValueFrom } from 'rxjs';
@@ -13,6 +13,7 @@ import { UserdetailsService } from '../../services/userdetials/userdetails.servi
     standalone: true,
     imports: [
         FormsModule,
+        RouterModule
     ],
     providers: [
         HttpClientModule
@@ -30,6 +31,7 @@ export class LoginComponent {
     public loginFormDetails = {
         otp: '',
         dhId: 0,
+        username: '',
     };
 
     public async handleLogin() {
@@ -46,7 +48,7 @@ export class LoginComponent {
 
                     const dnIh = response.CheckLoginjs.Table[0].DhId;
                     this.loginFormDetails.dhId = dnIh;
-                    
+                    this.loginFormDetails.username = response.CheckLoginjs.Table[0].DpName.toString();
                     sessionStorage.setItem('otp', JSON.stringify(this.loginFormDetails));
                 }
 
@@ -54,7 +56,7 @@ export class LoginComponent {
                 console.log(error);
             }
 
-            this.router.navigate(['/dashboard/home']);
+            this.router.navigate(['/dashboard/delivery/home']);
         }
     }
 }

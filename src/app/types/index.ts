@@ -34,6 +34,7 @@ interface ILoginTable {
 }
 
 export interface ILogin {
+    IsAdmin: number;
     ErrNo: String;
     DhId: number;
     Tripid: number;
@@ -52,4 +53,51 @@ export interface ILogin {
     BalanceBills: number;
     Balance: number;
     TripStatus: String; 
+}
+
+export enum NavigationType {
+    Customer = 'dashboard/customer',
+    Delivery = 'dashboard/delivery',
+    Admin = 'dashboard/admin',
+}
+
+export interface IFoodType {
+    Item_type: String;
+}
+
+export interface ICustomerList {
+    Vid: number,
+    VCode: String;
+    Vname: String;
+    Address1: String;
+    Mobile: String;
+    Phone: String;
+    Area: String;
+    Route1: String;
+    Route2: String;
+    AreaId: String;
+    LunchDC: number;
+    BreakfastDC: number;
+    TiffinDC: number;
+    OthersDC: number;
+}
+
+export interface IOrdersList {
+    Orid: number;
+    Ordate: Date;
+    StartDate?: Date;
+    Vid: number;
+    Vcode: String;
+    VName: String;
+    Vname?: String;
+    vname?: String;
+    Address1: String;
+    Mobile: String;
+    City: String;
+    Route1: String;
+    Itemid: number;
+    FoodType: String;
+    Item_Desc: String;
+    Qty: number;
+    StandardCost: number;
 }

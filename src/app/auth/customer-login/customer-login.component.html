@@ -1,0 +1,19 @@
+<form>
+    @if (!toggleFields) {
+        <div class="mb-3">
+            <label class="mb-1" for="phoneOrEmail"><strong>Phone or Email</strong></label>
+            <input type="text" class="form-control" placeholder="Enter Phone or Email" name="phoneOrEmail" [(ngModel)]="customerLoginForm.phone">
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary btn-block shadow" (click)="toggleFormFields()">Submit</button>
+        </div>
+    } @else {
+        <div class="mb-3">
+            <label class="mb-1" for="otp"><strong>OTP</strong></label>
+            <input type="password" class="form-control" placeholder="Enter OTP" name="otp" [(ngModel)]="customerLoginForm.otp">
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary btn-block shadow" (click)="handleCustomerLogin()">Sign In</button>
+        </div>
+    }
+</form>

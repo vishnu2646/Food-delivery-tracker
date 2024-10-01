@@ -1,0 +1,38 @@
+.food-img {
+    width: 100%;
+    height: 25rem;
+    object-fit: cover;
+    border-radius: 0.5rem;
+}
+
+.form-check-input {
+    border: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.sign-up {
+    color: var(--bs-gray);
+}
+
+.text-primary {
+    color: var(--primary) !important;
+}
+
+.wrapper{
+    margin-top: 3rem;
+}
+
+.logo-container {
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+@media (max-width: 765px) {
+    .food-img {
+        height: 200px;
+        margin-bottom: 20px;
+    }
+
+    .wrapper {
+        margin-top: 2rem;
+    }
+}
