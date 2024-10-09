@@ -3,6 +3,10 @@
     margin: 0;
 }
 
+:host ::ng-deep p-dropdown ul {
+    padding: 0;
+}
+
 @media (max-width: 768px) {
     .form-group {
         width: 100%;

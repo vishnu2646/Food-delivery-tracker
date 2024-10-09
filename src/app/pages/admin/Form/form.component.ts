@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, ViewChild, viewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
@@ -55,13 +55,32 @@ export class FormComponent implements OnInit {
 
     public code: String = "";
 
-    public types: IFoodType[] = [] as IFoodType[];
+    public fromDate: any;
+
+    public toDate: any;
+
+    public types: any[] = [
+        {
+            title: 'All',
+            name: 'All',
+        },
+        {
+            title: 'BreakFast', 
+            name: 'BreakFast'
+        },
+        {
+            title: 'Lunch',
+            name: 'Lunch'
+        },
+        {
+            title: 'Dinner',
+            name: 'Dinner'
+        }
+    ];
 
     public visible: boolean = false;
 
     public enableDateRange: boolean = false;
-
-    public rangeDates: Date[] | undefined;
 
     public availItems: IItem[] = [];
 
@@ -73,6 +92,8 @@ export class FormComponent implements OnInit {
 
     public seletedItem: any;
 
+    public selectedCustomer: any;
+
     public dateTypes: String[] = ["Today", "Tomorrow", "Continous"];
 
     public selectedDateType: String = "";
@@ -82,8 +103,8 @@ export class FormComponent implements OnInit {
     public itemToSave = {
         vid: '',
         vcode: '',
-        fromdate: '',
-        todate: '',
+        fromdate: moment(new Date()).format('YYYY-MM-DD'),
+        todate: moment(new Date()).format('YYYY-MM-DD'),
         itemid: '',
         Qty: 1,
         remarks: '',
@@ -95,33 +116,41 @@ export class FormComponent implements OnInit {
         this.activatedRouter.queryParams.subscribe(params => {
             this.id = params['vid'];
             this.formType = params['type'];
+            this.itemForm.item_type = params['type'];
             this.code = params['vcode'];
         });
+
+        // Initially selecte the date type for oder.
+        this.selectedDateType = 'Today';
+
+        // Intially Load the date for continuous date type selection for order.
+        const today = new Date().toISOString().split('T')[0];
+        this.fromDate = today;
+        this.toDate = today;
+
+        // Initialy loads the type of the food.
+        this.seletedItemType = this.types.filter(t => t.title === this.formType)[0];
+        this.itemForm.item_type = this.seletedItemType.title;
+
+        // Loads the food items for the order.
+        this.getOrderItems();
+
+        // Loads the selected customer from the session.
+        const selectedCustomer = sessionStorage.getItem('selectedCustomer');
+        if(selectedCustomer) {
+            const parsedSelectedCustomer = JSON.parse(selectedCustomer);
+            this.selectedCustomer = parsedSelectedCustomer;
+        }
 
         window.scrollTo({
             top: 0,
             behavior: 'smooth',
-        })
-
-        this.types = [
-            {
-                Item_type: "Breakfast"
-            },
-            {
-                Item_type: "Lunch"
-            },
-            {
-                Item_type: "Dinner"
-            },
-        ]
-
-        this.seletedItemType = this.types.filter(t => t.Item_type === this.formType)[0];
-        this.itemForm.item_type = this.seletedItemType.Item_type;
-        this.getOrderItems();
+        });
     }
 
     public handleItemTypeChange(event: DropdownChangeEvent): void {
         this.seletedItemType = event.value;
+        this.formType = event.value.title;
         this.itemForm.item_type = event.value['Item_type'];
         if(this.seletedItemType) {
             this.getOrderItems();
@@ -136,7 +165,7 @@ export class FormComponent implements OnInit {
             this.loggedInUserData = parsedUserData;
         }
         try {
-            const responseData = await lastValueFrom(this.apiService.getCreateOrder(this.id, this.seletedItemType['Item_type'], this.loggedInUserData.username));
+            const responseData = await lastValueFrom(this.apiService.getCreateOrder(this.id, this.seletedItemType.title, this.loggedInUserData.username));
             if(responseData) {
                 this.availItems = responseData.Customer.Table1
             }
@@ -159,43 +188,25 @@ export class FormComponent implements OnInit {
     public handleDateChange(event: Event, type: String) {
         const elemet = event.target as HTMLInputElement;
         if(type === 'from') {
-            this.itemToSave.fromdate = elemet.value;
+            this.itemToSave.fromdate = elemet.value || moment().format('YYYY-MM-DD');
         } else if(type === 'to') {
-            this.itemToSave.todate = elemet.value;
+            this.itemToSave.todate = elemet.value || moment().format('YYYY-MM-DD');
         }
     }
 
     public seletedOrderDate(type: String) {
-        // const today = new Date();
-        // let tomorrow = new Date();
-        // tomorrow.setDate(tomorrow.getDate() + 1);
-
-        // this.selectedDateType = type;
-        // if(type === 'Continous') {
-        //     this.enableDateRange = !this.enableDateRange;
-        // } else {
-        //     this.enableDateRange = false;
-        // }
-
-        // switch(this.selectedDateType) {
-        //     case 'Tomorrow':
-        //         this.itemForm.order_date = `${moment(tomorrow).format('YYYY-MM-DD')}`;
-        //         this.itemToSave.fromdate = `${moment(tomorrow).format('YYYY-MM-DD')}`;
-        //         this.itemToSave.todate = `${moment(tomorrow).format('YYYY-MM-DD')}`;
-        //         break;
-            
-        //     default:
-        //         this.itemForm.order_date = moment(today).format('YYYY-MM-DD');
-        //         this.itemToSave.fromdate = moment(today).format('YYYY-MM-DD');
-        //         this.itemToSave.todate = moment(today).format('YYYY-MM-DD');
-        //         break;
-        // }
-
         const today = moment().format('YYYY-MM-DD');
         const tomorrow = moment().add(1, 'days').format('YYYY-MM-DD');
-
+        
         this.selectedDateType = type;
         this.enableDateRange = type === 'Continous' ? !this.enableDateRange : false;
+        
+        if(type === 'Continous') {
+            if(this.fromDate) {
+                const element = this.fromDate.nativeElement
+                console.log(`Selected`, element)
+            }
+        }
 
         const selectedDate = type === 'Tomorrow' ? tomorrow : today;
 
@@ -221,6 +232,7 @@ export class FormComponent implements OnInit {
         this.itemToSave.user = this.loggedInUserData.username,
         this.itemToSave.remarks = this.itemForm.remarks,
         this.itemToSave.item_desc = this.itemForm.item;
+
         const data = (({ item_desc, ...newItem }) => newItem)(this.itemToSave);
         this.items.push(this.itemToSave);
         try {
@@ -230,12 +242,14 @@ export class FormComponent implements OnInit {
             }
         } catch (error) {
             console.log(error);
+        } finally {
+            this.resetItemForm();
         }
-        this.resetItemForm();
+
     }
 
     public handleSubmit() {
-        this.router.navigate(['/dashboard/admin/orders'], { queryParams: { id: this.id, type: this.seletedItemType['Item_type'] } });
+        this.router.navigate(['/dashboard/admin/orders'], { queryParams: { id: this.id, type: this.seletedItemType.title } });
     }
 
 }

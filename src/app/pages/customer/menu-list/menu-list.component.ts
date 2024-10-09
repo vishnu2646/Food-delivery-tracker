@@ -87,11 +87,9 @@ export class MenuListComponent {
 
         this.activatedRouter.queryParams.subscribe(params => {
             const menuType = params['type'];
-            console.log(menuType);
             this.menuType = menuType;
             if(menuType === undefined) {
                 this.menuList = [...this.list]
-                console.log(this.menuList);
             } else {
                 this.menuList = this.menuList.filter(item => item.category === this.menuType);
             }

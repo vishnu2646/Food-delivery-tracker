@@ -27,7 +27,6 @@ export class CustomerLoginComponent {
     }
 
     public handleCustomerLogin() {
-        console.log('customerLoginForm',  this.customerLoginForm);
         this.router.navigate(['/dashboard/customer']);
     }
 }

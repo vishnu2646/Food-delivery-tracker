@@ -2,35 +2,23 @@
     <h4>Ordered Items</h4>
     <div>
         <button class="btn btn-outline-danger me-2" data-bs-toggle="modal" data-bs-target="#orderCancelModal">Cancel</button>
-        <button class="btn btn-outline-primary" (click)="handlenavigateToOrderForm()">
-            {{ submitType === 'edit'? 'Edit' : "Add" }} Item</button>
+        <!-- <button class="btn btn-outline-primary" (click)="handlenavigateToOrderForm()">
+            {{ submitType === 'edit'? 'Edit' : "Add" }} Item</button> -->
     </div>
 </div>
 
 <section class="ordered-items">
     <table class="details">
-        <tr>
-            <th>Name</th>
-            <td>Mr.Varkey</td>
-        </tr>
-        <tr>
-            <th>Phone</th>
-            <td>
-                <input 
-                    type="number" 
-                    name="phone" 
-                    id="phone" 
-                    class="form-control" 
-                    placeholder="Enter phone number" 
-                    autocomplete="off"
-                    (blur)="getOrderDetails($event)" 
-                >
-            </td>
-        </tr>
-        <tr>
-            <th>Item Type</th>
-            <td>Dinner</td>
-        </tr>
+        @for (item of orderUser; track $index) {
+            <tr>
+                <th>Name</th>
+                <td>{{ item.Vname }}</td>
+            </tr>
+            <tr>
+                <th>Item Type</th>
+                <td>{{ item.FoodType }}</td>
+            </tr>
+        }
     </table>
     <div class="itemtable table-responsive">
         <table class="table">
@@ -42,13 +30,13 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- @for (item of orderItems; track $index) { -->
+                @for (item of orderItems; track $index) {
                     <tr>
-                        <td>{{ orderItems['Ordate']}}</td>
-                        <td>{{ orderItems['Item_Desc']}}</td>
-                        <td>{{ orderItems['Qty']}}</td>
+                        <td>{{ item.Ordate }}</td>
+                        <td>{{ item.Item_Desc }}</td>
+                        <td>{{ item.Qty}}</td>
                     </tr>
-                <!-- } -->
+                }
             </tbody>
         </table>
     </div>

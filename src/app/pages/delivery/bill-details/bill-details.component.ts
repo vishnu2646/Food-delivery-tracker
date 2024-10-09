@@ -126,7 +126,6 @@ export class BillDetailsComponent implements OnInit {
                 }
             }
         } catch (error) {
-            console.log("detial error");
             console.log("error", error);
             this.showErrorDialog = true;
             this.emptyMessage = 'Something went wrong!... <br/> please login again...'
@@ -146,7 +145,6 @@ export class BillDetailsComponent implements OnInit {
     public editPaymentMode(event: any) {
         // const eventData = event;
         // const mode = eventData.value.mode;
-        console.log("here");
         this.updateBill.Paymode = event.target.value;
         this.toggleEditMode('selected_payment_mode');
     }
@@ -155,11 +153,9 @@ export class BillDetailsComponent implements OnInit {
 
         try {
             const updateBillData = { DhId: this.loggedInData.dhId, OTP: this.loggedInData.otp, SeqId: this.seqId, ...this.updateBill };
-            console.log(updateBillData);
             
             const response = await lastValueFrom(this.apiService.updateBill(updateBillData));
-
-            if(response === "Bill Updated Successfully.") {
+            if(response === "Bill updated successfully.") {
                 alert(response);
                 this.location.back();
             }

@@ -60,7 +60,7 @@ export class PagesComponent implements AfterViewInit {
                 {
                     title: 'Home',
                     icon: 'fa-home',
-                    link: '/dashboard/admin/customer-orders',
+                    link: '/dashboard/admin',
                     isActive: false,
                 },
                 {
@@ -113,6 +113,7 @@ export class PagesComponent implements AfterViewInit {
 
     public handleSignOut() {
         sessionStorage.removeItem('otp');
+        sessionStorage.removeItem('selectedCustomer');
         if (this.router.url.includes('dashboard/delivery')) {
             this.router.navigate(['/auth/delivery-login']);
         } else if (this.router.url.includes('dashboard/admin')) {

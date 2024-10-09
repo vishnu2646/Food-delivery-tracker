@@ -82,7 +82,7 @@ export class OrdersComponent implements OnInit {
                 this.hasParams = !!params['type'];
             });
             const date = moment(this.date).format('YYYY-MM-DD');
-            const responseOrders = await lastValueFrom(this.apiService.getOrdersList(this.type, this.loggedInUserData.username, date, this.Vid,));
+            const responseOrders = await lastValueFrom(this.apiService.getOrdersList(this.type, this.loggedInUserData.username, date, this.Vid));
             if(responseOrders && responseOrders.AllCustomer) {
                 this.ordersList = responseOrders.AllCustomer.Table;
             } else if(responseOrders && responseOrders.ItemValues){
@@ -96,6 +96,6 @@ export class OrdersComponent implements OnInit {
 
     public handleOrderDetail(data: any) {
         this.orderService.setOrderData(data);
-        this.router.navigate(['/dashboard/admin/order/items'], { queryParams: { id: this.Vid, type: this.type } });
+        this.router.navigate(['/dashboard/admin/order/items'], { queryParams: { id: data.Vid, type: data.FoodType, orderId: data.Orid } });
     }
 }

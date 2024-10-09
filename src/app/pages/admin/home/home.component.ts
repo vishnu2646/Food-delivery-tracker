@@ -16,8 +16,12 @@ export class AdminHomeComponent {
 
     public adminOptions = [
         {
-            title: 'View Orders',
+            title: 'Create Orders',
             link: '/dashboard/admin/customer-orders'
+        },
+        {
+            title: 'View Order List',
+            link: '/dashboard/admin/orders'
         }
     ];
 

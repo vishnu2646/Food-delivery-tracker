@@ -1,8 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormComponent } from "../Form/form.component";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { OrderService } from '../../../services/order.service';
+import { ApiService, UserdetailsService } from '../../../services';
+import { lastValueFrom } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { TableModule } from 'primeng/table';
 
 @Component({
     selector: 'app-orderitems',
@@ -10,38 +14,51 @@ import { OrderService } from '../../../services/order.service';
     imports: [
         FormComponent,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        CommonModule,
+        TableModule,
     ],
     templateUrl: './orderitems.component.html',
     styleUrl: './orderitems.component.css'
 })
 export class OrderitemsComponent implements OnInit {
-    private router = inject(Router);
+    private activatedRoute = inject(ActivatedRoute);
 
-    private orderService = inject(OrderService);
+    private apiService = inject(ApiService);
 
-    public submitType: String = '';
-
-    public viewAddItem: boolean = false;
+    private userService = inject(UserdetailsService);
 
     public orderItems: any;
 
+    public orderUser: any;
+
+    public id: any;
+
+    public orderId: any;
+
+    public formType: String = '';
+
+    public loggedInUserDetials: any;
+
     public ngOnInit(): void {
+        this.activatedRoute.queryParams.subscribe(params => {
+            this.id = params['id'];
+            this.formType = params['type'];
+            this.orderId = params['orderId'];
+        });
+        this.loggedInUserDetials = this.userService.getLoginData();
         this.fetchOrderDetails();
     }
 
-    public fetchOrderDetails() {
-        this.orderItems = this.orderService.getOrderData();
-        console.log(this.orderItems);
-    }
-
-    public getOrderDetails(event: FocusEvent) {
-        const element = event.target as HTMLInputElement;
-        const phoneNumber = element.value;
-        console.log(phoneNumber);
-    }
-
-    public handlenavigateToOrderForm(): void {
-        // this.router.navigate(['/dashboard/admin/order/form'], { queryParams: {type: this.submitType} });
+    public async fetchOrderDetails() {
+        try {
+            const responseData = await lastValueFrom(this.apiService.getOrderItemDetails(this.loggedInUserDetials?.username, this.id, this.formType, this.orderId));
+            if(responseData){
+                this.orderUser = responseData.OrderDetails.Table;
+                this.orderItems = responseData.OrderDetails.Table1;
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 }

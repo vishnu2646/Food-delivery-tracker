@@ -54,7 +54,11 @@ export class ApiService {
     }
 
     public getCustomerOrders(username: String, id: number, type: String): Observable<any> {
-        return this.http.get(`${this.baseUrl}/OrderDetails?User=${username}&Vid=${id}&Itemtype=${type}&databaseKey=${this.key}`);
+        return this.http.get(`${this.baseUrl}/CustomerOrderDetails?User=${username}&Vid=${id}&Itemtype=${type}&databaseKey=${this.key}`);
+    }
+
+    public getOrderItemDetails(username: String, id: number, type: String, orid: any): Observable<any> {
+        return this.http.get(`${this.baseUrl}/OrderDetails?User=${username}&Vid=${id}&Orid=${orid}&Itemtype=${type}&databaseKey=${this.key}`);
     }
 
     public getCreateOrder(vid: String, type: String, username: String): Observable<any> {
@@ -67,7 +71,11 @@ export class ApiService {
     }
 
     public cancelOrder(data: any): Observable<any> {
-        return this.http.get(`${this.baseUrl}//Addtocancel?FromDate=${data.fromDate}&ToDate=${data.toDate}&ItemType=${data.type}&Reason=${data.reason}&Vid=${data.vid}&OrId=${data.orid}&databaseKey=${this.key}`)
+        return this.http.get(`${this.baseUrl}/Addtocancel?FromDate=${data.fromDate}&ToDate=${data.toDate}&ItemType=${data.type}&Reason=${data.reason}&Vid=${data.vid}&OrId=${data.orid}&databaseKey=${this.key}`)
+    }
+
+    public deleteOrderItem(orId: number, itemId: number, date: String): Observable<any> {
+        return this.http.get(`${this.baseUrl}/DeleteItem?Orid=${orId}&itemid=${itemId}&OrdDate=${date}&databaseKey=${this.key}`)
     }
 
     public getOrdersList(type: String, username: String, date?: String, vid?: String): Observable<any> {

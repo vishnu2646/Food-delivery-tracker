@@ -1,80 +1,47 @@
 <section class="order-creation">
     <div class="card">
-        <div class="card-header d-flex align-items-center justify-content-between">
-            <h3 (click)="handleViewOrder()">View Item</h3>
-            <button class="btn btn-primary" (click)="handleNavigateOrders()">View Orders</button>
-        </div>
         <div class="card-body">
             <div class="form-group">
                 <p-autoComplete
                     [suggestions]="filteredCustomerList" 
                     (completeMethod)="handleSearchCustomer($event)"
                     placeholder="Enter Customer phone number"
-                    field="VCode" 
-                    [(ngModel)]="customerForm.VCode"
+                    field="Phone" 
+                    [(ngModel)]="customerForm.Phone"
                     (onSelect)="onCustomerSelect($event)"
                 />
+
+                <div class="form-group mt-3">
+                    <label for="cname mb-2">Customer Name</label>
+                    <p-autoComplete
+                        [suggestions]="filteredCustomerList" 
+                        (completeMethod)="handleSearchCustomer($event)"
+                        placeholder="Enter Customer name"
+                        field="Vname" 
+                        [(ngModel)]="customerForm.Vname"
+                        (onSelect)="onCustomerSelect($event)"
+                    />
+                </div>
             </div>
-            <h3 class="mt-3">
-                Details
-                <i class="fa-solid" [ngClass]="showUserDetails ? 'fa-chevron-up' : 'fa-chevron-down'" (click)="togggleShowDetails()"></i>
-            </h3>
+            <div class="d-flex align-items-center justify-content-between mt-3">
+                <h3 class="mt-3">
+                    Details
+                    <i class="fa-solid" [ngClass]="showUserDetails ? 'fa-chevron-up' : 'fa-chevron-down'" (click)="togggleShowDetails()"></i>
+                </h3>
+               <button class="btn btn-outline-danger" (click)="handleResetCustomerSelection()">Refresh</button>
+            </div>
             @if(showUserDetails) {
                 <div class="customer-details-fields d-flex align-items-center flex-wrap gap-4">
-                    <div class="form-group">
-                        <label for="cname mb-2">Customer Name</label>
-                        <input 
-                            type="text" 
-                            name="cname" 
-                            id="cname" 
-                            class="form-control" 
-                            placeholder="Enter Customer Name"
-                            [(ngModel)]="customerForm.Vname"
-                        >
+                    <div class="d-flex align-items-center justify-content-between w-100">
+                        <h4>{{customerForm.Vname}}</h4>
+                        <h6>{{ customerForm.Phone }}</h6>
                     </div>
-                    <div class="form-group">
-                        <label for="cphone mb-2">Phone</label>
-                        <input 
-                            type="number" 
-                            name="cphone" 
-                            id="cphone" 
-                            class="form-control" 
-                            placeholder="Enter Customer phone number"
-                            [(ngModel)]="customerForm.Phone"
-                        >
+                    <div>
+                        <strong>Address:</strong> {{ customerForm.Address1 }}
                     </div>
-                    <div class="form-group">
-                        <label for="address mb-2">Address</label>
-                        <input 
-                            type="text" 
-                            name="address" 
-                            id="address" 
-                            class="form-control" 
-                            placeholder="Enter Customer Address"
-                            [(ngModel)]="customerForm.Address1"
-                        >
-                    </div>
-                    <div class="form-group">
-                        <label for="area mb-2">Area</label>
-                        <input 
-                            type="text" 
-                            name="area" 
-                            id="area" 
-                            class="form-control" 
-                            placeholder="Enter Customer Area"
-                            [(ngModel)]="customerForm.Area"
-                        >
-                    </div>
-                    <div class="form-group">
-                        <label for="route mb-2">Route</label>
-                        <input 
-                            type="text" 
-                            name="route" 
-                            id="route" 
-                            class="form-control" 
-                            placeholder="Enter Route details"
-                            [(ngModel)]="customerForm.Route1"
-                        >
+                    <div class="d-flex align-items-center justify-content-between w-100">
+                        <span><strong> Area:</strong>   {{ customerForm.Area }}</span>
+                        <span><strong> Route:</strong>  {{ customerForm.Route1 }}</span>
                     </div>
                 </div>
             }
@@ -83,16 +50,24 @@
 
     <main class="mt-5 cursor-pointer">
         <div class="tab-head d-flex align-items-center justify-content-between gap-4 flex-wrap mb-5">
-            <div class="d-flex align-items-center flex-wrap">
-                @for (type of foodTypes; track $index) {
+            <div class="d-flex align-items-center gap-4">
+                <p-dropdown
+                    [options]="foodTypes"
+                    [(ngModel)]="selectedFoodType" 
+                    optionLabel="name"
+                    placeholder="Select a food type"
+                    (onChange)="selectFoodType($event)"
+                >
+
+                </p-dropdown>
+                <button class="btn btn-outline-primary" (click)="handleNavigateCreateNewOrder()">Create Order</button>
+
+                <!-- @for (type of foodTypes; track $index) {
                     <h4 role="button" class="selected mb-0" [ngClass]="{'active': selectedFoodType === type}"  (click)="selectFoodType(type)">{{ type }}</h4>
-                }
+                } -->
             </div>
             <div class="actions">
-                @if(OrderList.length === 0) {
-                    <button class="btn btn-outline-primary" (click)="handleNavigateCreateNewOrder()">Create Order</button>
-                }
-                @if(OrderList.length > 0) {
+                <!-- @if(OrderList.length > 0) {
                     <button 
                         class="btn btn-outline-danger" 
                         [disabled]="selectedFoodType === 'All'" 
@@ -100,7 +75,7 @@
                         data-bs-toggle="modal" 
                         data-bs-target="#cancelModal"
                     >Cancel Order</button>
-                }
+                } -->
             </div>
         </div>
         @if(OrderList.length > 0){
@@ -108,15 +83,14 @@
                 [value]="OrderList"
                 selectionMode="single" 
                 [(selection)]="selectedItem"
-                dataKey="id" 
+                dataKey="Itemid" 
             >
                 <ng-template pTemplate="header">
                     <tr>
                         <th>Create Order</th>
                         <th>Item</th>
                         <th>Qty</th>
-                        <th>Cost</th>
-                        <th>Action</th>
+                        <th>Actions</th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-item>
@@ -124,35 +98,12 @@
                         <td>{{ item.Ordate | date: 'mediumDate' }}</td>
                         <td>{{ item.Item_Desc }}</td>
                         <td>{{ item.Qty }}</td>
-                        <td>{{ item.StandardCost }}</td>
-                        <td>X</td>
+                        <td>
+                            <i class="fa-solid fa-trash" (click)="handleDeleteItem(item)"></i>
+                        </td>
                     </tr>
                 </ng-template>
             </p-table>
-            <!-- <div class="table-responsive mt-3">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Create Order</th>
-                            <th>Item</th>
-                            <th>Qty</th>
-                            <th>Cost</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @for (item of OrderList; track $index) {
-                            <tr>
-                                <td>{{ item.Ordate | date: 'mediumDate' }}</td>
-                                <td>{{ item.Item_Desc }}</td>
-                                <td>{{ item.Qty }}</td>
-                                <td>{{ item.StandardCost }}</td>
-                                <td (click)="handleItemToCancel(item)">X</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div> -->
         } @else {
             <h6 class="text-center">No Orders to Display</h6>
         }

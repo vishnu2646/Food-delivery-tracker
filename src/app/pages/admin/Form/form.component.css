@@ -2,6 +2,15 @@
     padding: 0;
 }
 
+:host ::ng-deep p-autocomplete ul {
+    padding: 0;
+}
+
+/* :host ::ng-deep p-autocomplete div.p-overlay.p-component {
+    width: 250px;
+    overflow-x: scroll;
+} */
+
 :host ::ng-deep p-dropdown .p-dropdown.p-component.p-inputwrapper {
     width: 100%;
 }

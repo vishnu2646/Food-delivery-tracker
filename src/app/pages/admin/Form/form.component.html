@@ -1,5 +1,5 @@
 <div class="d-flex align-items-center justify-content-between flex-wrap">
-    <h4>{{ formType }} Form</h4>
+    <h4>{{ selectedCustomer.Vname.replace('Mr', '') }} Form</h4>
     <button class="btn float-end btn-outline-primary" (click)="handleSubmit()">Finish order</button>
 </div>
 <br/>
@@ -10,10 +10,10 @@
                 <label for="itemtype" class="font-semibold w-[6rem] me-3">Item Type</label>
             </td>
             <td>
-                <p-dropdown 
+                <p-dropdown
                     [options]="types" 
                     [(ngModel)]="seletedItemType"
-                    optionLabel="Item_type" 
+                    optionLabel="name"
                     placeholder="Select a Type"
                     (onChange)="handleItemTypeChange($event)"
                 />
@@ -71,8 +71,8 @@
     </div>
     @if(enableDateRange) {
         <div class="w-100 mt-3 d-flex flex-column gap-3">
-            <input type="date" name="fromorderdate" id="fromorderdate" class="form-control w-100" (change)="handleDateChange($event, 'from')">
-            <input type="date" name="toorderdate" id="toorderdate" class="form-control w-100" (change)="handleDateChange($event, 'to')">
+            <input type="date" name="fromorderdate" id="fromorderdate" class="form-control w-100" [(ngModel)]="fromDate" (change)="handleDateChange($event, 'from')">
+            <input type="date" name="toorderdate" id="toorderdate" class="form-control w-100" [(ngModel)]="toDate" (change)="handleDateChange($event, 'to')">
         </div>
     }
 
