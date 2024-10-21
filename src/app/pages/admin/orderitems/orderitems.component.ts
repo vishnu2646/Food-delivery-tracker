@@ -2,7 +2,6 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormComponent } from "../Form/form.component";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OrderService } from '../../../services/order.service';
 import { ApiService, UserdetailsService } from '../../../services';
 import { lastValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
@@ -40,6 +39,15 @@ export class OrderitemsComponent implements OnInit {
 
     public loggedInUserDetials: any;
 
+    public cancelForm = {
+        fromDate: '',
+        toDate: '',
+        reason: '',
+        type: '',
+        vid: '',
+        orid: '',
+    }
+
     public ngOnInit(): void {
         this.activatedRoute.queryParams.subscribe(params => {
             this.id = params['id'];
@@ -59,6 +67,34 @@ export class OrderitemsComponent implements OnInit {
             }
         } catch (error) {
             console.log(error);
+        }
+    }
+
+    public async handleCancelOrder() {
+        const currentCancelForm = {
+            fromDate: this.cancelForm.fromDate,
+            toDate: this.cancelForm.toDate,
+            reason: this.cancelForm.reason,
+            type: this.formType.toString(),
+            vid: this.id,
+            orid: this.orderId,
+        };
+
+
+        try {
+            const responseData = await lastValueFrom(this.apiService.cancelOrder(currentCancelForm));
+            console.log(responseData);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            this.cancelForm = {
+                fromDate: '',
+                toDate: '',
+                reason: '',
+                type: '',
+                vid: '',
+                orid: '',
+            }
         }
     }
 }

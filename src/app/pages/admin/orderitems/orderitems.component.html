@@ -2,8 +2,6 @@
     <h4>Ordered Items</h4>
     <div>
         <button class="btn btn-outline-danger me-2" data-bs-toggle="modal" data-bs-target="#orderCancelModal">Cancel</button>
-        <!-- <button class="btn btn-outline-primary" (click)="handlenavigateToOrderForm()">
-            {{ submitType === 'edit'? 'Edit' : "Add" }} Item</button> -->
     </div>
 </div>
 
@@ -32,7 +30,7 @@
             <tbody>
                 @for (item of orderItems; track $index) {
                     <tr>
-                        <td>{{ item.Ordate }}</td>
+                        <td>{{ item.Ordate | date: 'longDate' }}</td>
                         <td>{{ item.Item_Desc }}</td>
                         <td>{{ item.Qty}}</td>
                     </tr>
@@ -50,10 +48,22 @@
             </div>
             <div class="modal-body">
                 <p class="text-center mt-3">Are you sure want to cancel the order ?</p>
+                <div class="mb-3">
+                    <label for="fromorderdate">From Date</label>
+                    <input type="date" required  name="fromorderdate" id="fromorderdate" class="form-control w-100" [(ngModel)]="cancelForm.fromDate"(ngModelChange)="cancelForm.fromDate">
+                </div>
+                <div class="mb-3">
+                    <label for="toorderdate">To Date</label>
+                    <input type="date" required name="toorderdate" id="toorderdate" class="form-control w-100" [(ngModel)]="cancelForm.toDate"(ngModelChange)="cancelForm.toDate">
+                </div>
+                <div class="mb-3">
+                    <label for="reason">Cancel Reason</label>
+                    <input type="text" class="form-control" placeholder="Enter cancel Reason" [(ngModel)]="cancelForm.reason" (ngModelChange)="cancelForm.reason"/>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-outline-danger">Cancel Order</button>
+                <button type="button" class="btn btn-outline-danger" (click)="handleCancelOrder()">Cancel Order</button>
             </div>
         </div>
     </div>

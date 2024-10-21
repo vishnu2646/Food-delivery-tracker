@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, OnInit, ViewChild, viewChild } from '@angular/core';
+import { Component, ElementRef, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
@@ -9,7 +9,6 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { AutoCompleteCompleteEvent, AutoCompleteModule, AutoCompleteSelectEvent } from 'primeng/autocomplete';
 import { CalendarModule } from 'primeng/calendar';
 
-import { IFoodType } from '../../../types';
 import { TableModule } from 'primeng/table';
 import { ApiService } from '../../../services';
 import { lastValueFrom } from 'rxjs';
@@ -100,18 +99,6 @@ export class FormComponent implements OnInit {
 
     public loggedInUserData: any;
 
-    public itemToSave = {
-        vid: '',
-        vcode: '',
-        fromdate: moment(new Date()).format('YYYY-MM-DD'),
-        todate: moment(new Date()).format('YYYY-MM-DD'),
-        itemid: '',
-        Qty: 1,
-        remarks: '',
-        user: '',
-        item_desc: '',
-    }
-
     public ngOnInit() {
         this.activatedRouter.queryParams.subscribe(params => {
             this.id = params['vid'];
@@ -182,16 +169,11 @@ export class FormComponent implements OnInit {
     public handleSelectItem(event: AutoCompleteSelectEvent) {
         this.seletedItem = event.value;
         this.itemForm.item = event.value.Item_desc1;
-        this.itemToSave.itemid = event.value.ItemId;
     }
 
     public handleDateChange(event: Event, type: String) {
         const elemet = event.target as HTMLInputElement;
-        if(type === 'from') {
-            this.itemToSave.fromdate = elemet.value || moment().format('YYYY-MM-DD');
-        } else if(type === 'to') {
-            this.itemToSave.todate = elemet.value || moment().format('YYYY-MM-DD');
-        }
+        console.log(elemet);
     }
 
     public seletedOrderDate(type: String) {
@@ -211,8 +193,6 @@ export class FormComponent implements OnInit {
         const selectedDate = type === 'Tomorrow' ? tomorrow : today;
 
         this.itemForm.order_date = selectedDate;
-        this.itemToSave.fromdate = selectedDate;
-        this.itemToSave.todate = selectedDate;
     }
 
     public resetItemForm() {
@@ -226,17 +206,21 @@ export class FormComponent implements OnInit {
     }
 
     public async handleAddItem() {
-        this.itemToSave.vid = String(this.id),
-        this.itemToSave.vcode = String(this.code),
-        this.itemToSave.Qty = this.itemForm.qty,
-        this.itemToSave.user = this.loggedInUserData.username,
-        this.itemToSave.remarks = this.itemForm.remarks,
-        this.itemToSave.item_desc = this.itemForm.item;
-
-        const data = (({ item_desc, ...newItem }) => newItem)(this.itemToSave);
-        this.items.push(this.itemToSave);
+        const itemToSave = {
+            vid: String(this.id),
+            vcode: String(this.code),
+            fromdate: moment(new Date()).format('YYYY-MM-DD'),
+            todate: moment(new Date()).format('YYYY-MM-DD'),
+            itemid: this.seletedItem.ItemId,
+            Qty: this.itemForm.qty,
+            remarks: this.itemForm.remarks,
+            user: this.loggedInUserData.username,
+            item_desc: this.itemForm.item,
+        }
+        this.items.push(itemToSave);
+        const {item_desc, ...newData} = itemToSave;
         try {
-            const responseData = await lastValueFrom(this.apiService.createSaveOrder(data));
+            const responseData = await lastValueFrom(this.apiService.createSaveOrder(newData));
             if(responseData) {
                 alert(responseData);
             }
