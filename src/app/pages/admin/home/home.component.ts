@@ -22,6 +22,10 @@ export class AdminHomeComponent {
         {
             title: 'View Order List',
             link: '/dashboard/admin/orders'
+        },
+        {
+            title: 'Packing List',
+            link: '/dashboard/admin/packing-form'
         }
     ];
 

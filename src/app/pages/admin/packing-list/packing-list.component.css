@@ -1,0 +1,23 @@
+.packaking-list table {
+    width: 100%;
+}
+
+.packaking-list table th, .packaking-list table td  {
+    padding: 10px;
+}
+
+.bill-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.bill-list .card {
+    width: 350px;
+}
+
+@media (max-width: 767px) {
+    .bill-list .card {
+        width: 100%;
+    }
+}

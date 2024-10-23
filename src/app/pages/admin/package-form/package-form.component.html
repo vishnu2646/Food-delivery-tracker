@@ -1,0 +1,20 @@
+<section>
+    <div class="form-group">
+        <div>
+            <label for="date">Date</label>
+            <input type="date" name="date" id="date" class="form-control" [(ngModel)]="packageForm.date" [value]="packageForm.date">
+        </div>
+        <div class="mt-3">
+            <label for="food_type">Food Type</label>
+            <p-dropdown 
+                [options]="types"
+                optionLabel="Item_Type"
+                placeholder="Select a Food Type"
+                styleClass="w-100"
+                (onChange)="handleFoodTypeChange($event)"
+            />
+        </div>
+
+        <button type="button" class="btn btn-primary mt-3 float-end" (click)="handlePackingList()">Next</button>
+    </div>
+</section>

@@ -2,6 +2,8 @@
     <div class="card">
         <div class="card-body">
             <div class="form-group">
+                <label for="cphone mb-2">Customer Phone</label>
+                <br />
                 <p-autoComplete
                     [suggestions]="filteredCustomerList" 
                     (completeMethod)="handleSearchCustomer($event)"
@@ -13,6 +15,7 @@
 
                 <div class="form-group mt-3">
                     <label for="cname mb-2">Customer Name</label>
+                    <br />
                     <p-autoComplete
                         [suggestions]="filteredCustomerList" 
                         (completeMethod)="handleSearchCustomer($event)"

@@ -19,6 +19,9 @@ import { OrderitemsComponent } from './pages/admin/orderitems/orderitems.compone
 import { FormComponent } from './pages/admin/Form/form.component';
 import { CustomerslistComponent } from './pages/admin/customerslist/customerslist.component';
 import { AdminLoginComponent } from './auth/admin-login/admin-login.component';
+import { PackingListComponent } from './pages/admin/packing-list/packing-list.component';
+import { PackageFormComponent } from './pages/admin/package-form/package-form.component';
+import { PackageDetailsComponent } from './pages/admin/package-details/package-details.component';
 
 export const routes: Routes = [
     {
@@ -111,6 +114,18 @@ export const routes: Routes = [
                     {
                         path: 'order/form',
                         component: FormComponent
+                    },
+                    {
+                        path: 'packing-list',
+                        component: PackingListComponent
+                    },
+                    {
+                        path: 'packing-form',
+                        component: PackageFormComponent
+                    },
+                    {
+                        path: 'packing-details',
+                        component: PackageDetailsComponent
                     }
                 ]
             }

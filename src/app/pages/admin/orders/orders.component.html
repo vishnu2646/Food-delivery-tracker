@@ -25,7 +25,9 @@
                         <p>{{ order.FoodType }}</p>
                     </div>
                     <div>
-                        <h6>Qty: {{ order.Qty }}</h6>
+                        @if(order.Qty) {
+                            <h6>Qty: {{ order.Qty }}</h6>
+                        }
                         <span>{{ order.Ordate | date: 'mediumDate'  }}</span>
                         <span>{{ order.StartDate | date: 'mediumDate'  }}</span>
                     </div>

@@ -9,6 +9,7 @@
     --primary-opacity2: rgba(2, 93, 58, 0.2);
     --title: #3D4152;
     --primary-bg: rgba(252, 128, 25, 0.05);
+    --black: #000001;
 }
 
 *,
@@ -57,7 +58,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
     margin-bottom: 0.5rem;
     font-weight: 500;
     line-height: 1.2;
-    color: #3D4152; 
+    color: #3D4152;
 }
 
 h1, .h1 {
@@ -211,4 +212,8 @@ a:hover {
 
 li {
     list-style: none;
+}
+
+ul {
+    padding: 0;
 }

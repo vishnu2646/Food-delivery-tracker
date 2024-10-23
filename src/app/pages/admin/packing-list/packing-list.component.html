@@ -1,0 +1,47 @@
+<section class="packaking-list">
+    <h3>Package Details</h3>
+    <table>
+        <tr>
+            <th>Total</th>
+            <td><strong> {{ packageHeader.TotalBills || 0 }}</strong> </td>
+        </tr>
+        <tr>
+            <th>Packed</th>
+            <td><strong> {{ packageHeader.TotalPacked || 0 }}</strong> </td>
+        </tr>
+        <tr>
+            <th>Balance</th>
+            <td><strong> {{ packageHeader.BalancePacked || 0 }}</strong> </td>
+        </tr>
+    </table>
+    <h3 class="my-3">Lists</h3>
+    <div class="bill-list">
+        @for (package of packageLists; track $index) {
+            <div class="card" (click)="handlePackageDetail(package.Dhid)">
+                <div class="card-body">
+                    <div class="title d-flex justify-content-between align-items-center">
+                        <div>
+                            <h4>{{ package.Dpname }}</h4>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <table>
+                            <tr>
+                                <th>Total</th>
+                                <td><strong>{{ package.NoOfBills || 0 }}</strong></td>
+                            </tr>
+                            <tr>
+                                <th>Packed</th>
+                                <td><strong>{{ package.Packed || 0 }}</strong></td>
+                            </tr>
+                            <tr>
+                                <th>Balance</th>
+                                <td><strong>{{ package.Balance || 0 }}</strong></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>

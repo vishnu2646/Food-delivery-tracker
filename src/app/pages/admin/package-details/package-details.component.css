@@ -1,0 +1,50 @@
+.package-details table {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.package-details table th, .package-details table td {
+    padding: 10px;
+    color: var(--black);
+    font-weight: 600;
+}
+
+.person {
+    font-size: 20px;
+    color: var(--black);
+    font-weight: 700;
+}
+
+.package-details-list  {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.package-details-list .card {
+    width: 350px;
+}
+
+.package-details-list .card .customer {
+    color: var(--black);
+    font-weight: 500;
+}
+
+.package-details-list .card .desc {
+    color: var(--title);
+    font-weight: 600;
+}
+
+.package-details-list .card.packed {
+    border-left: 8px solid var(--primary);
+}
+
+.package-details-list .card.unpacked {
+    border-left: 8px solid yellow;
+}
+
+@media (max-width: 767px) {
+    .package-details-list  .card {
+        width: 100%;
+    }
+}

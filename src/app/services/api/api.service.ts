@@ -13,7 +13,7 @@ export class ApiService {
 
     private baseUrl: String = environment.domain;
 
-    private key: String = "Annamfood";
+    private key: String = "AnnamfoodLocal";
 
     public handleOtpLogin(otp: String): Observable<ICheckLogin> {
         return this.http.get<ICheckLogin>(`${this.baseUrl}/CheckLogin?OTP=${otp}&databaseKey=${this.key}`)
@@ -83,6 +83,26 @@ export class ApiService {
             return this.http.get(`${this.baseUrl}/OrderList?Vid=${vid}&User=${username}&databaseKey=${this.key}`);
         } else {
             return this.http.get(`${this.baseUrl}/AllOrderDetails?User=${username}&orddate=${date}&Itemtype=${type}&databaseKey=${this.key}`);
+        }
+    }
+
+    public getItemTypes(username: String): Observable<any> {
+        return this.http.get(`${this.baseUrl}/PackingType?User=${username}&databaseKey=${this.key}`)
+    }
+
+    public getPackageList(date: String, type: String): Observable<any> {
+        return this.http.get(`${this.baseUrl}/MobPackingList?ActionDate=${date}&ItemType=${type}&databaseKey=${this.key}`)
+    }
+
+    public getPackageDetails(id: number): Observable<any> {
+        return this.http.get(`${this.baseUrl}/DpersonOrderList?dhid=${id}&databaseKey=${this.key}`)
+    }
+
+    public updatePackingType(data: any, type: String): Observable<any> {
+        if(type === "pending") {
+            return this.http.post(`${this.baseUrl}/UpdatePendingList?databaseKey=${this.key}`, data)
+        } else {
+            return this.http.post(`${this.baseUrl}/UpdatePackingList?databaseKey=${this.key}`, data)
         }
     }
 }
