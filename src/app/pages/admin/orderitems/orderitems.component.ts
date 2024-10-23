@@ -83,7 +83,9 @@ export class OrderitemsComponent implements OnInit {
 
         try {
             const responseData = await lastValueFrom(this.apiService.cancelOrder(currentCancelForm));
-            console.log(responseData);
+            if(responseData && responseData.Message === "Cancelled successfully.") {
+                alert(responseData.Message);
+            }
         } catch (error) {
             console.log(error);
         } finally {

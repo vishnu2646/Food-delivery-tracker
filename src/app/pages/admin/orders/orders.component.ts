@@ -44,27 +44,37 @@ export class OrdersComponent implements OnInit {
 
     public ordersList: IOrdersList[] = [];
 
-    public date: any = new Date();
+    public date: any = moment(new Date()).toDate();
+
+    public foodType: any;
 
     public ngOnInit(): void {
-        this.getOrdersList();
 
         this.types = [
             { type: 'All', id: 'All' },
             { type: 'BreakFast', id: 'BreakFast' },
             { type: 'Lunch', id: 'Lunch' },
             { type: 'Dinner', id: 'Dinner' },
-        ]
+        ];
+
+        const ftype = this.orderService.getFoodType();
+        const data = this.orderService.getOrderData();
+
+        if(ftype) {
+            this.foodType = this.types.filter(type => type.id === ftype?.type)[0];
+            this.date = moment(data?.Ordate).toDate();
+            if(this.foodType) {
+                this.getOrdersList();
+            }
+        }
     }
 
-    public handleUpdatedDateChange(event: any ) {
-        this.date = moment(event).toDate();
+    public handleUpdatedDateChange(event: any) {
+        this.date = event;
         this.getOrdersList();
     }
 
     public handleFoodTypeChange(event: DropdownChangeEvent) {
-        let value = event.value;
-        this.type = value.type;
         this.getOrdersList();
     }
 
@@ -78,7 +88,7 @@ export class OrdersComponent implements OnInit {
         try {
             this.acrivatedRoute.queryParams.subscribe(params => {
                 this.Vid = params['id'] || '';
-                this.type = params['type'] || this.type;
+                this.type = params['type'] || this.foodType?.type;
                 this.hasParams = !!params['type'];
             });
             const date = moment(this.date).format('YYYY-MM-DD');
@@ -96,6 +106,7 @@ export class OrdersComponent implements OnInit {
 
     public handleOrderDetail(data: any) {
         this.orderService.setOrderData(data);
+        this.orderService.foodType = this.foodType;
         this.router.navigate(['/dashboard/admin/order/items'], { queryParams: { id: data.Vid, type: data.FoodType, orderId: data.Orid } });
     }
 }

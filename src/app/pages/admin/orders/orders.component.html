@@ -7,6 +7,7 @@
     />
     @if(!hasParams) {
         <p-dropdown 
+            [(ngModel)]="foodType"
             [options]="types"
             optionLabel="type"
             placeholder="Select a Food Type"

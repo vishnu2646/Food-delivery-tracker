@@ -1,11 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, ChangeDetectorRef, Component, inject } from '@angular/core';
-import { NavigationEnd, Router, RouterModule } from '@angular/router';
-import { Location } from "@angular/common";
+import { Router, RouterModule } from '@angular/router';
 
 import { SidenavComponent } from "../components/sidenav/sidenav.component";
-import { UserdetailsService } from '../services';
 import { NavigationType } from '../types';
+import { BackhandlerComponent } from "../components/backhandler/backhandler.component";
 
 @Component({
     selector: 'app-pages',
@@ -13,7 +12,8 @@ import { NavigationType } from '../types';
     imports: [
         RouterModule,
         CommonModule,
-        SidenavComponent
+        SidenavComponent,
+        BackhandlerComponent
     ],
     templateUrl: './pages.component.html',
     styleUrl: './pages.component.css'
@@ -22,10 +22,6 @@ export class PagesComponent implements AfterViewInit {
     private router = inject(Router);
 
     public cd = inject(ChangeDetectorRef);
-
-    private location = inject(Location);
-
-    private userDetailsService = inject(UserdetailsService);
 
     public toggle: boolean = false;
 
@@ -98,17 +94,6 @@ export class PagesComponent implements AfterViewInit {
 
     public toggleSideNavWidth() {
         this.toggle = !this.toggle;
-    }
-
-    public goBack() {
-        this.location.back();
-        this.router.events.subscribe(event => {
-            if (event instanceof NavigationEnd) {
-                if(this.router.url.includes('/dashboard/delivery/home')) {
-                    this.userDetailsService.requestRefresh();
-                }
-            }
-        })
     }
 
     public handleSignOut() {

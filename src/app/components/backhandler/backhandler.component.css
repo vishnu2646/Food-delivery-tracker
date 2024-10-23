@@ -1,0 +1,11 @@
+.backIcon {
+    width: 40px;
+    height: 40px;
+    background-color: var(--primary);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
