@@ -50,6 +50,12 @@ export class OrdersComponent implements OnInit {
 
     public ngOnInit(): void {
 
+        this.acrivatedRoute.queryParams.subscribe(params => {
+            this.Vid = params['id'] || '';
+            this.type = params['type'] || this.foodType?.type;
+        });
+
+
         this.types = [
             { type: 'All', id: 'All' },
             { type: 'BreakFast', id: 'BreakFast' },
@@ -57,7 +63,7 @@ export class OrdersComponent implements OnInit {
             { type: 'Dinner', id: 'Dinner' },
         ];
 
-        const ftype = this.orderService.getFoodType();
+        const ftype = this.orderService.getFoodType() || this.types.filter(type => type.id === this.type)[0];
         const data = this.orderService.getOrderData();
 
         if(ftype) {

@@ -96,6 +96,16 @@ export class PagesComponent implements AfterViewInit {
         this.toggle = !this.toggle;
     }
 
+    public handleHomeRouting() {
+        if (this.router.url.includes('dashboard/delivery')) {
+            this.router.navigate(['/dashboard/delivery/home']);
+        } else if (this.router.url.includes('dashboard/admin')) {
+            this.router.navigate(['/dashboard/admin']);
+        } else {
+            this.router.navigate(['/auth/login']);
+        }
+    }
+
     public handleSignOut() {
         sessionStorage.removeItem('otp');
         sessionStorage.removeItem('selectedCustomer');

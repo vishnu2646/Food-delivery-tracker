@@ -171,11 +171,6 @@ export class FormComponent implements OnInit {
         this.itemForm.item = event.value.Item_desc1;
     }
 
-    public handleDateChange(event: Event, type: String) {
-        const elemet = event.target as HTMLInputElement;
-        console.log(elemet);
-    }
-
     public seletedOrderDate(type: String) {
         const today = moment().format('YYYY-MM-DD');
         const tomorrow = moment().add(1, 'days').format('YYYY-MM-DD');
@@ -184,10 +179,14 @@ export class FormComponent implements OnInit {
         this.enableDateRange = type === 'Continous' ? !this.enableDateRange : false;
         
         if(type === 'Continous') {
-            if(this.fromDate) {
-                const element = this.fromDate.nativeElement
-                console.log(`Selected`, element)
-            }
+            this.fromDate = today;
+            this.toDate = today;
+        } else if(type === 'Tomorrow') {
+            this.fromDate = tomorrow;
+            this.toDate = tomorrow;
+        } else if(type === 'Today') {
+            this.fromDate = today;
+            this.toDate = today;
         }
 
         const selectedDate = type === 'Tomorrow' ? tomorrow : today;
@@ -209,8 +208,8 @@ export class FormComponent implements OnInit {
         const itemToSave = {
             vid: String(this.id),
             vcode: String(this.code),
-            fromdate: moment(new Date()).format('YYYY-MM-DD'),
-            todate: moment(new Date()).format('YYYY-MM-DD'),
+            fromdate: moment(this.fromDate).format('YYYY-MM-DD'),
+            todate: moment(this.toDate).format('YYYY-MM-DD'),
             itemid: this.seletedItem.ItemId,
             Qty: this.itemForm.qty,
             remarks: this.itemForm.remarks,
