@@ -13,7 +13,7 @@ export class ApiService {
 
     private baseUrl: String = environment.domain;
 
-    private key: String = "AnnamfoodLocal";
+    private key: String = environment.key;
 
     public handleOtpLogin(otp: String): Observable<ICheckLogin> {
         return this.http.get<ICheckLogin>(`${this.baseUrl}/CheckLogin?OTP=${otp}&databaseKey=${this.key}`)
